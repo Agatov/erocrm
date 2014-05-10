@@ -1,0 +1,9 @@
+= simple_form_for program, url: url do |f|
+  = f.input :name
+  = f.input :duration
+  = f.input :price
+  = f.input :manager_salary
+  = f.input :masseuse_salary
+  = f.input :cash
+  = f.input :number_of_masseuses, as: :radio_buttons, collection: [1,2], wrapper: :vertical_radio_and_checkboxes
+  = f.button :submit

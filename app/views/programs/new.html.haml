@@ -1,0 +1,8 @@
+%legend
+  Добавить программу
+
+
+.row
+  .col-md-6
+    = render partial: 'programs/form', locals: {program: @program, url: programs_path}
+  .col-md-6

@@ -1,0 +1,35 @@
+%legend
+  Программы
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Название
+      %th Продолжительность
+      %th Полная стоимость
+      %th Прибыль
+      %th Менеджеру
+      %th Массажистке
+      %th #
+      %th ...
+
+  %tbody
+    - @programs.each do |program|
+      %tr
+        %td
+          = program.name
+        %td
+          = program.duration.to_s
+        %td
+          = program.price.to_s
+        %td
+          = program.cash.to_s
+        %td
+          = program.manager_salary.to_s
+        %td
+          = program.masseuse_salary.to_s
+        %td
+          = program.number_of_masseuses
+        %td
+          = link_to 'редактировать', edit_program_path(program)
+
