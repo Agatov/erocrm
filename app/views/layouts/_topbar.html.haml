@@ -16,6 +16,14 @@
           %a{href: visits_path}
             Клиенты
 
+        %li{class: params[:controller] == 'programs' ? 'active' : ''}
+          %a{href: programs_path}
+            Программы
+
+        %li{class: params[:controller] == 'workers' ? 'active' : ''}
+          %a{href: workers_path}
+            Сотрудники
+
       %form.navbar-form.navbar-right
         %a.btn.btn-success{href: new_visit_path}
           Добавить клиента

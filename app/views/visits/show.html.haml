@@ -1,0 +1,122 @@
+%legend
+  Посещение
+  = "##{@visit.id.to_s}"
+
+.row
+  .col-md-12
+    .panel.panel-default
+      .panel-body
+        %button.btn.btn-primary{'data-toggle' => 'modal', 'data-target' => '#myModal'} Продлить
+        %button.btn.btn-primary{'data-toggle' => 'modal', 'data-target' => '#extraModal'} Добавить дополнение
+
+
+.row
+  .col-md-12
+    .panel.panel-default
+      .panel-heading
+        Гость
+      .panel-body
+        %table.table.table-striped
+          %tr
+            %th Имя
+            %th Телефон
+            %th Номер карты
+
+          %tr
+            %td
+              = @visit.guest.name
+            %td
+              = @visit.guest.phone
+            %td
+              = @visit.guest.card_code.to_s
+
+.row
+
+
+  .col-md-12
+    .panel.panel-default
+      .panel-heading
+        Программы и дополнения
+      .panel-body
+        %table.table.table-striped
+          %tr
+            %th Название
+            %th Скидка
+            %th Прибыль
+            %th Зарплаты
+            - workers = @visit.get_workers.uniq
+            - workers.each do |worker|
+              %th
+                = worker.name
+
+          - @visit.visit_programs.each do |visit_program|
+            %tr
+              %td
+                = visit_program.program.name
+              %td
+                = visit_program.sale.to_s
+              %td
+                = visit_program.cash.to_s
+              %td
+                = visit_program.salary.to_s
+              - workers.each do |worker|
+                %td
+                  - visit_program.visit_program_workers.each do |vpw|
+                    - if vpw.worker_id == worker.id
+                      = vpw.salary.to_s
+
+
+  -#.col-md-6
+    .panel.panel-default
+      .panel-heading
+        Зарплаты
+      .panel-body
+        %table.table.table-striped
+          %tr
+            %th
+              Имя сотрудника
+            %th
+              Должность
+            %th
+              Заработок
+
+          - @visit.visit_programs.each do |vp|
+            - vp.visit_program_workers.each do |vpw|
+              %tr
+                %td
+                  = vpw.worker.name
+                %td
+                %td
+                  = vpw.salary.to_s
+
+
+
+
+
+.modal.fade#myModal
+  .modal-dialog.modal-sm
+    .modal-content
+      .modal-header
+        %button.close{type: :button, 'data-dismiss' => 'modal', 'aria-hidden' => 'true '} &times;
+        %h4 Продлить гостя
+      .modal-body
+        Вы точно хотите продлить гостя?
+      .modal-footer
+        %button.btn.btn-default{type: :button, 'data-dismiss' => 'modal'}
+          Закрыть
+        %a.btn.btn-primary{type: :button, href: '#'}
+          Продлить на час
+
+
+.modal.fade#extraModal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{type: :button, 'data-dismiss' => 'modal', 'aria-hidden' => 'true '} &times;
+        %h4 Добавить дополнение
+      .modal-body
+        = simple_form_for @visit.visit_programs.build, url: visit_visit_programs_path(@visit) do |f|
+          = f.association :program
+          = f.association :workers
+          = f.button :submit
+

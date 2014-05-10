@@ -1,8 +1,14 @@
 class VisitsController < ApplicationController
   def index
+    @visits = Visit.order(:id)
+
+    #@todo - пиздец!
+    @manager = Worker.where(post_cd: 0).first
+    @workers = Worker.where(post_cd: 1)
   end
 
   def show
+    @visit = Visit.find params[:id]
   end
 
   def new

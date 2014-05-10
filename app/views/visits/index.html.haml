@@ -1,2 +1,59 @@
 %legend
-  Олололо
+  Посещения
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th #
+      %th Время
+      %th Касса
+      %th Прибыль
+
+
+      %th
+        = @manager.name
+
+      - @workers.each do |worker|
+        %th
+          = worker.name
+
+      %th ...
+  %tbody
+    - @visits.each do |visit|
+      %tr
+        %td
+          = visit.id.to_s
+        %td
+          13:00 - 14:15
+
+        %td
+          = visit.sum.to_s
+        %td
+          = visit.cash.to_s
+
+        %td
+          - salary = 0
+          - visit.visit_programs.each do |vp|
+            - vp.visit_program_workers.each do |vpw|
+              - if vpw.worker_id == @manager.id
+                - salary += vpw.salary
+
+          - if salary > 0
+            = salary.to_s
+
+        - @workers.each do |worker|
+          - salary = 0
+          - visit.visit_programs.each do |vp|
+            - vp.visit_program_workers.each do |vpw|
+              - if vpw.worker_id == worker.id
+                - salary += vpw.salary
+
+          %td
+            - if salary > 0
+              = salary.to_s
+
+
+
+
+        %td
+          = link_to 'посмотреть', visit_path(visit)

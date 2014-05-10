@@ -8,4 +8,9 @@ class Program < ActiveRecord::Base
   validates :cash, presence: true
   validates :number_of_masseuses, presence: true, numericality: {less_than_or_equal_to: 2}
 
+
+  def sum_salary
+    manager_salary + masseuse_salary * number_of_masseuses
+  end
+
 end
