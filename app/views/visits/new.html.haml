@@ -1,0 +1,39 @@
+%legend
+  Новое посещение
+
+= simple_form_for @visit, url: visits_path do |f|
+
+
+
+  .row
+    .col-md-6
+
+
+      %ul.nav.nav-tabs
+        %li.active
+          %a{href: '#'} Новый гость
+        %li
+          %a{href: '#'} Есть карта
+        %li
+          %a{href: '#'} По номеру телефона
+
+
+      .panel.panel-default
+        .panel-heading
+          Введите имя и номер телефона гостя
+        .panel-body
+          = f.simple_fields_for :guest, f.object.build_guest do |g|
+            = g.input :name
+            = g.input :phone
+
+
+    .col-md-6
+      = f.simple_fields_for :visit_programs, f.object.visit_programs.build do |vp|
+        = vp.association :program
+        -#= vp.input :sale
+        = vp.association :workers
+
+
+  .row
+    .col-md-4
+      = f.button :submit
