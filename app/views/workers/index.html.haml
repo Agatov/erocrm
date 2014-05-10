@@ -1,0 +1,20 @@
+%legend
+  Сотрудники
+
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Имя
+      %th Должность
+      %th В смене
+      %th ...
+
+  %tbody
+    - @workers.each do |worker|
+      %tr
+        %td
+          = worker.name
+        %td
+        %td
+          = link_to 'редактировать', edit_worker_path(worker)

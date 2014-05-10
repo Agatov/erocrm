@@ -3,4 +3,5 @@ Erocrm::Application.routes.draw do
 
   resources :visits
   resources :programs
+  resources :workers
 end
